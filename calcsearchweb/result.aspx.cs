@@ -17,6 +17,7 @@ namespace calcsearchweb
         {
             jsonViewer jV = new jsonViewer();
             string[] calctrace;
+            string[] eligtrace;
             string temp = (System.Configuration.ConfigurationManager.AppSettings["results"]).ToString();
             
             temp = temp.Replace("@", "");
@@ -26,7 +27,8 @@ namespace calcsearchweb
             temp = temp.Replace(" \"", "\"");
             temp = temp.Replace("}\"", "}");
             Table table = jV.deserialize(temp);
-            calctrace = jV.traces;
+            calctrace = jV.ctraces;
+            eligtrace = jV.etraces;
             Table tablenew = new Table();
             TableRow row = new TableRow();
             TableCell cell = new TableCell();
@@ -40,14 +42,14 @@ namespace calcsearchweb
                 row.Controls.Add(cell);
                 tablenew.Controls.Add(row);
 
-                foreach (var item in calctrace)
+                foreach (var item in calctrace.Zip(eligtrace,Tuple.Create))
                 {
                     row = new TableRow();
                     cell = new TableCell();
                     Button b = new Button();
-                    b.Text = "View Calctrace";
+                    b.Text = "View trace";
                     b.CommandArgument = count.ToString();
-                    b.CommandName = item;
+                    b.CommandName = item.Item1+item.Item2;
                     b.Click += new EventHandler(this.clicked);
                     cell.Controls.Add(b);
                     row.Controls.Add(cell);

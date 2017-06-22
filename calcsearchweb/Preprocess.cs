@@ -12,61 +12,19 @@ using System.Web.UI.WebControls;
 using System.Linq;
 
 namespace calcsearchweb {
-    public class CalculationTrace
-    {
-        public string RunId { get; set; }
-        public string Expression { get; set; }
-        public double ExpressionValue { get; set; }
-        public object ExpressionName { get; set; }
-        public object LhsExpression { get; set; }
-        public object LhsValue { get; set; }
-        public object LhsName { get; set; }
-        public object RhsExpression { get; set; }
-        public object RhsValue { get; set; }
-        public object RhsName { get; set; }
-        public object SourceOperand { get; set; }
-    }
-
-    public class EligibilityTrace
-    {
-        public string RunId { get; set; }
-        public string Expression { get; set; }
-        public bool ExpressionValue { get; set; }
-        public object ExpressionName { get; set; }
-        public object LhsExpression { get; set; }
-        public object LhsValue { get; set; }
-        public object LhsName { get; set; }
-        public object RhsExpression { get; set; }
-        public object RhsValue { get; set; }
-        public object RhsName { get; set; }
-        public object SourceOperand { get; set; }
-    }
-
-    public class Calctrace
-    {
-        public string RuleName { get; set; }
-        public string EarningId { get; set; }
-        public string EarningType { get; set; }
-        public int EarningStatus { get; set; }
-        public double? EarningAmountLC { get; set; }
-        public string CurrencyCode { get; set; }
-        public string LeverCode { get; set; }
-        public double IncentiveRate { get; set; }
-        public string ProgramCode { get; set; }
-        public CalculationTrace CalculationTrace { get; set; }
-        public EligibilityTrace EligibilityTrace { get; set; }
-    }
-
     public class Value
     {
         public double searchscore { get; set; }
-        public string calcrunid { get; set; }
-        public string programcode { get; set; }
-        public string transactionid { get; set; }
-        public string levercode { get; set; }
-        public string participantid { get; set; }
-        public string date { get; set; }
-        public Calctrace calctrace { get; set; }
+        public string CalcRunId { get; set; }
+        public string TraceId { get; set; }
+        public string ProgramCode { get; set; }
+        public string TransactionId { get; set; }
+        public string LeverCode { get; set; }
+        public string ParticipantId { get; set; }
+        public string Date { get; set; }
+        public string TransactionVersionNumber { get; set; }
+        public object CalcTrace { get; set; }
+        public object EligTrace { get; set; }
     }
 
     public class RootObject
@@ -78,7 +36,8 @@ namespace calcsearchweb {
     public class jsonViewer
     {
         public string calcres = "";
-        public string []traces;
+        public string []ctraces;
+        public string []etraces;
         public Table deserialize(string json)
         {
             Table table = new Table();
@@ -86,7 +45,7 @@ namespace calcsearchweb {
             TableRow row;
             TableCell cell;
             List<Value> val;
-            int count = 0;
+            int count = 0,ecount=0;
             
             
             calctrace calc = new calctrace();
@@ -94,7 +53,8 @@ namespace calcsearchweb {
             result trace = new result();
             
             val = rootobject.value;
-            traces = new string[val.Count];
+            ctraces = new string[val.Count];
+            etraces = new string[val.Count];
             table.BorderWidth = 1;
             row = new TableRow();
 
@@ -105,7 +65,7 @@ namespace calcsearchweb {
                 PropertyInfo[] proper = val[0].GetType().GetProperties();
                 foreach (PropertyInfo property in proper)
                 {
-                    if (!(property.Name.Equals("calctrace")))
+                    if (!(property.Name.Equals("CalcTrace")) && !(property.Name.Equals("EligTrace")))
                     {
                         cell = new TableCell();
                         cell.Text = property.Name;
@@ -124,11 +84,17 @@ namespace calcsearchweb {
                     foreach (PropertyInfo property in prop)
                     {
 
-                        if (property.Name.Equals("calctrace"))
+                        if (property.Name.Equals("CalcTrace"))
                         {
-                            string ress = calctraces(item);
-                            traces[count] = ress;
+                            string ress = property.GetValue(item).ToString();
+                            ctraces[count] = ress;
                             count++;
+                        }
+                        else if (property.Name.Equals("EligTrace"))
+                        {
+                            string ress = property.GetValue(item).ToString();
+                            etraces[ecount] = ress;
+                            ecount++;
                         }
 
                         else
@@ -153,7 +119,7 @@ namespace calcsearchweb {
 
             return table;
         }
-        public string calctraces(Value item)
+        /*public string calctraces(Value item)
         {
             PropertyInfo[] calcprop = item.calctrace.GetType().GetProperties();
             calcres = "";
@@ -200,6 +166,6 @@ namespace calcsearchweb {
                 }
             }
             return calcres;
-        }
+        }*/
     }
 }

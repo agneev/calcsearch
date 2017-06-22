@@ -31,7 +31,7 @@ namespace calcsearchweb
             if (pos >= 0)
                 queryPart = queryPart.Remove(pos);
 
-            string url = $"https://agneevsearch.search.windows.net/indexes/trace-index/docs?api-version=2016-09-01&search={queryPart}";
+            string url = $"https://agneevsearch.search.windows.net/indexes/csv-index/docs?api-version=2016-09-01&search={queryPart}";
             url = HttpUtility.UrlDecode(url);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
