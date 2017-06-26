@@ -75,7 +75,7 @@ namespace calcsearchweb {
                 }
                 table.Rows.Add(row);
 
-                foreach (var item in val)
+                foreach (var item in val.Skip(1))
                 {
 
                     row = new TableRow();

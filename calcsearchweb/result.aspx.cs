@@ -44,6 +44,8 @@ namespace calcsearchweb
 
                 foreach (var item in calctrace.Zip(eligtrace,Tuple.Create))
                 {
+                    if((item.Item1 == null) && (item.Item2 == null))
+                        continue;
                     row = new TableRow();
                     cell = new TableCell();
                     Button b = new Button();

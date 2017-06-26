@@ -6,28 +6,29 @@
 <head runat="server">
     <title></title>
     <style>
-table {
-    width:100%;
-}
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 8px;
-    text-align: left;
-}
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
-}
-table#t01 tr:nth-child(odd) {
-   background-color:#fff;
-}
-table#t01 th {
-    background-color: black;
-    color: white;
-}
-</style>
+        table {
+            width:100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        table#t01 tr:nth-child(even) {
+            background-color: #eee;
+        }
+        table#t01 tr:nth-child(odd) {
+            background-color:#fff;
+        }
+        table#t01 th {
+            background-color: black;
+            color: white;
+        }
+
+    </style>
 </head>
 <body style="background-color:darkslategray">
     <form id="form1" runat="server">
@@ -51,9 +52,27 @@ table#t01 th {
         
     </asp:TableRow>
 </asp:Table>
-        <p>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Run" />
-        </p>
+        <asp:ScriptManager runat="server" ID="sm">
+ </asp:ScriptManager>
+        <asp:updatepanel runat="server">
+ <ContentTemplate>
+ <asp:button id="button1" runat="server" Text="Run" onclick="Button1_Click" />
+ </ContentTemplate>
+ </asp:updatepanel>
+        <asp:Panel ID="but" runat="server">
+            </asp:Panel>
+        <asp:Panel id="res" runat="server">
+        <h2 style="text-align:left;color:cadetblue">Search Results:</h2>
+            
+    </asp:Panel>
+        <asp:Panel id="Panel1" runat="server">
+        <h2 id="tracehead"style="text-align:left;color:cadetblue">Calculation Trace :</h2>
+            
+    </asp:Panel>
+    <asp:Panel id="calctracefinal" runat="server">
+        
+            
+    </asp:Panel>
     </form>
 </body>
 </html>
