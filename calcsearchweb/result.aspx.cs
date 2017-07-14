@@ -26,6 +26,7 @@ namespace calcsearchweb
             temp = temp.Replace("\"{", "{");
             temp = temp.Replace(" \"", "\"");
             temp = temp.Replace("}\"", "}");
+            
             Table table = jV.deserialize(temp);
             calctrace = jV.ctraces;
             eligtrace = jV.etraces;

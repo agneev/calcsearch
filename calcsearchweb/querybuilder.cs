@@ -45,7 +45,9 @@ namespace calcsearchweb
                 html = reader.ReadToEnd();
             }
             html = html.Replace("\\r\\n", "\r\n");
+            this.html = this.html.Replace("\\\\\"", "");
             html = html.Replace('\\', ' ');
+            
 
             return html;
 
